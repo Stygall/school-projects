@@ -44,6 +44,8 @@ class WordTrainer:
                 if not update_list[4]:
                     session_flag = False
             self.update_base_list(current_training, update_list)
+            # self.update_question_list(current_training)
+            print('after update: ')
             print(current_training.question_list)
             start = update_list[3]
             start += 1
@@ -57,9 +59,9 @@ class WordTrainer:
     def make_base_list_and_question_list(self, current_training):
         reason = current_training.user + '_training'
         dictionary = self.dal_instance.load_a_file(reason)
+        if not current_training.base_list:
+            current_training.base_list = self.word_instance.word_dictionary_to_list(dictionary)
         base_list = current_training.base_list
-        if not base_list:
-            base_list = self.word_instance.word_dictionary_to_list(dictionary)
         new_list = []
         for item in base_list:
             x = 0
@@ -76,20 +78,36 @@ class WordTrainer:
         base_list = current_training.base_list
         question_list = current_training.question_list
         if correct:
-            if word in base_list:
-                index = base_list.index(word)
-                factor = base_list[index][0]
-                factor -= 1
-                new_index = question_list.index(word)
-                question_list.pop(new_index)
-                return current_training
+            for item in base_list:
+                if word in item:
+                    index = base_list.index(item)
+                    factor = base_list[index][0]
+                    factor -= 1
+                    new_index = question_list.index(item)
+                    question_list.pop(new_index)
+                    return current_training
         elif not correct:
-            if word in base_list:
-                index = base_list.index(word)
-                factor = base_list[index][0]
-                factor += 1
-                question_list.append(word)
-                return current_training
+            for item in base_list:
+                if word in item:
+                    index = base_list.index(item)
+                    factor = base_list[index][0]
+                    factor += 1
+                    question_list.append(item)
+                    return current_training
+
+    @staticmethod
+    def update_question_list(current_training):
+        base_list = current_training.base_list
+        print('before update: ' + current_training.question_list)
+        new_list = []
+        for item in base_list:
+            x = 0
+            while x < item[0]:
+                new_list.append(item)
+                x += 1
+        current_training.question_list = new_list
+        return current_training
+
 
     def ask_question(self, current_training, start):
         question_list = current_training.question_list

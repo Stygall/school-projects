@@ -100,7 +100,9 @@ class InputMenus:
                 original_word_dictionary = self.dal_instance.load_a_file('word')
                 new_word = self.registry_instance.register_new_word()
                 new_word_list = self.word_instance.word_object_to_list(new_word)
-                new_word_dictionary = self.word_instance.word_list_to_dictionary(new_word, original_word_dictionary, new_word_list)
+                new_word_dictionary = self.word_instance.word_list_to_dictionary(new_word,
+                                                                                 original_word_dictionary,
+                                                                                 new_word_list)
                 reason = input('give the filename without "Pickle.txt: "')
                 new = self.dal_instance.save_a_file(reason, new_word_dictionary)
                 print(new)
@@ -149,7 +151,8 @@ class InputMenus:
         print(self.user_instance.user_object_to_list(new_user))
         print('continue')
         new_user_list = self.user_instance.user_object_to_list(new_user)
-        new_user_dictionary = self.user_instance.user_list_to_dictionary(new_user, original_user_dictionary, new_user_list)
+        new_user_dictionary = self.user_instance.user_list_to_dictionary(new_user, original_user_dictionary,
+                                                                         new_user_list)
         self.dal_instance.save_a_file(reason, new_user_dictionary)
         print('-' * 50)
         print('your account has been successfully registered!'.center(50))
@@ -209,13 +212,14 @@ class InputMenus:
         print('or'.center(50))
         print('(e)nglish?'.center(50))
         choice = input().lower()
-        # flag = True
-        # while flag:
-        if choice == 'd':
-            answer_language = 1
-            return answer_language
-        elif choice == 'e':
-            answer_language = 2
-            return answer_language
-        elif choice == 'q':
-            self.output_menu_instance.quit()
+        choose_language_flag = True
+        while choose_language_flag:
+            if choice == 'd':
+                answer_language = 1
+                return answer_language
+            elif choice == 'e':
+                answer_language = 2
+                return answer_language
+            elif choice == 'q':
+                self.output_menu_instance.quit()
+            print('invalid input please try again')
