@@ -1,31 +1,21 @@
 import pickle
 
 
-def pickleAFile(reason, dumpDict):
+def load_a_file(reason):
     filename = reason + '_pickle.txt'
-    with open(filename, 'wb') as file:
-        pickle.dump(dumpDict, file)
-        file.close()
+    try:
+        with open(filename, 'rb') as file:
+            read_pickle = pickle.load(file)
+        return read_pickle
+    except FileNotFoundError:
+        with open(filename, 'wb') as file:
+            if '_' in filename:
+                pickle.dump(word_dictionary_backup, file, pickle.HIGHEST_PROTOCOL)
+                file.close()
+        with open(filename, 'rb') as file:
+            read_pickle = pickle.load(file)
+        return read_pickle
 
-
-reason = input()
-choice = input()
-
-if choice == '1':
-    dumpDict = {'Miel': ['Miel', 'mielisawesome', ['nl_en', 'en_nl']], 'Dev': ['Dev', 'test123']}
-    print (dumpDict)
-    pickleAFile(reason, dumpDict)
-elif choice == '2' :
-    dumpDict = {'brood':[5,'brood','bread'],
-'zelfmoord':[5,'zelfmoord','suicide'],
-'broodrooster':[5,'broodrooster','toaster'],
-'badkuip':[5,'badkuip','bathtub'],
-'pindakaas':[5,'pindakaas','peanutbutter'],
-'jam':[5,'jam','jelly'],
-'augurk':[5,'augurk','pickle'],
-'handtas':[5,'handtas','purse'],
-'voordeur':[5,'voordeur','front door'],
-'kestboom':[5,'kerstboom','christmas tree']
-}
-
-    pickleAFile(reason,dumpDict)
+reason = input('filename')
+readpickle = load_a_file(reason)
+print(readpickle)

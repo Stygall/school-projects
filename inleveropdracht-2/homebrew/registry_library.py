@@ -3,6 +3,7 @@ from homebrew import database_library
 from homebrew import user_library
 from homebrew import menu_library
 from homebrew import word_training_library
+from homebrew import word_puzzle_library
 
 
 class Creator:
@@ -55,16 +56,126 @@ class Creator:
         new_user.password = input()
         return new_user
 
-    @staticmethod
-    def register_training(training_languages, library):
-        new_training = word_training_library.WordTrainer()
-        new_training.answer_language = training_languages
+    def register_training(self, library):
+
+        new_training = word_training_library.VocabularyTrainer()
         new_training.user = library[0]
-        if training_languages == 1:
-            new_training.question_language = 2
-            new_training.question_list = []
-            return new_training
-        elif training_languages == 2:
-            new_training.question_language = 1
-            new_training.question_list = []
-            return new_training
+
+        print('-' * 50)
+        print('what language do you want to practice?'.center(50))
+
+        def choose_answer_language(library):
+            for item in library[2]:
+                print(item)
+                print('do you want to practice this language?'.center(50))
+                choose_answer_language_flag = True
+
+                while choose_answer_language_flag:
+                    print('(y)es or (n)o?'.center(50))
+                    choice = input().lower()
+                    if choice.lower() == 'y':
+                        new_training.answer_language = library[2].index(item) + 1
+                        return new_training
+                    elif choice.lower() == 'n':
+                        choose_answer_language_flag = False
+                    elif choice.lower() == 'q':
+                        choose_answer_language_flag = False
+                        self.output_menu_instance.quit()
+                    else:
+                        print('invalid input please try again'.center(50))
+
+        def choose_question_language(library):
+
+            part_three_flag = True
+
+            print('-' * 50)
+            print('what language do you want be questioned with?'.center(50))
+
+            while part_three_flag:
+                for item in library[2]:
+                    print(item)
+                    print('do you want to be questioned with this language?'.center(50))
+                    choose_answer_language_flag = True
+
+                    while choose_answer_language_flag:
+                        print('(y)es or (n)o?'.center(50))
+                        choice = input().lower()
+                        if choice.lower() == 'y':
+                            new_training.question_language = library[2].index(item) + 1
+                            return new_training
+                        elif choice.lower() == 'n':
+                            choose_answer_language_flag = False
+                        elif choice.lower() == 'q':
+                            choose_answer_language_flag = False
+                            part_three_flag = False
+                            self.output_menu_instance.quit()
+                        else:
+                            print('invalid input please try again'.center(50))
+        choose_answer_language(library)
+        choose_question_language(library)
+        print(new_training.question_language)
+        return new_training
+
+    def register_puzzle(self, library):
+        new_training = word_puzzle_library.CrossWordPuzzle()
+        new_training.user = library[0]
+
+        part_one_flag = True
+        part_two_flag = True
+        part_three_flag = True
+
+        print('-' * 50)
+        print('what language do you want to practice?'.center(50))
+        while part_one_flag:
+            for item in library[2]:
+                print(item)
+                print('do you want to practice this language?'.center(50))
+                choose_answer_language_flag = True
+                while choose_answer_language_flag:
+                    print('(y)es or (n)o?'.center(50))
+                    choice = input().lower()
+                    if choice.lower() == 'y':
+                        new_training.answer_language = library[2].index(item) + 1
+                        choose_answer_language_flag = False
+                        part_one_flag = False
+                    elif choice.lower() == 'n':
+                        choose_answer_language_flag = False
+                    elif choice.lower() == 'q':
+                        choose_answer_language_flag = False
+                        part_three_flag = False
+                        part_two_flag = False
+                        self.output_menu_instance.quit()
+                    else:
+                        print('invalid input please try again'.center(50))
+
+        while part_two_flag:
+            index = new_training.answer_language - 1
+            library[2].pop(index)
+            question_language_options = library[2]
+            if len(question_language_options) == 1:
+                new_training.question_language = library[0]
+            else:
+                print('-' * 50)
+                print('what language do you want be questioned with?'.center(50))
+
+                while part_three_flag:
+                    for item in library[2]:
+                        print(item)
+                        print('do you want to be questioned with this language?'.center(50))
+                        choose_answer_language_flag = True
+
+                        while choose_answer_language_flag:
+                            print('(y)es or (n)o?'.center(50))
+                            choice = input().lower()
+                            if choice.lower() == 'y':
+                                new_training.question_language = library[2].index(item) + 1
+                                return new_training
+                            elif choice.lower() == 'n':
+                                choose_answer_language_flag = False
+                            elif choice.lower() == 'q':
+                                choose_answer_language_flag = False
+                                part_three_flag = False
+                                part_two_flag = False
+                                self.output_menu_instance.quit()
+                            else:
+                                print('invalid input please try again'.center(50))

@@ -12,7 +12,7 @@ word_dictionary_backup = {'brood': [5, 'brood', 'bread'],
                           'kestboom': [5, 'kerstboom', 'christmas tree']
                           }
 
-user_dictionary_backup = {'Miel': ['Miel', 'mielisawesome', ['nl_en', 'en_nl']], 'Dev': ['Dev', 'test123']}
+user_dictionary_backup = {'Miel': ['Miel', 'mielisawesome', ['dutch', 'english']], 'Dev': ['Dev', 'test123']}
 
 
 class Dal:
