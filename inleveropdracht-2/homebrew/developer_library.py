@@ -14,6 +14,7 @@ class Developer:
         self.word_instance = word_library.Word()
 
     def developer_console(self):
+
         developer_flag = True
         while developer_flag:
             self.output_menu_instance.developer_options()
@@ -44,12 +45,15 @@ class Developer:
                 self.back_to_main_menu()
 
     def reset_users(self):
+
         self.dal_instance.save_a_file('user', database_library.user_dictionary_backup)
 
     def reset_words(self):
+
         self.dal_instance.save_a_file('word', database_library.word_dictionary_backup)
 
     def add_word(self):
+
         original_word_dictionary = self.dal_instance.load_a_file('word')
         new_word = self.registry_instance.register_new_word()
         new_word_list = new_word.word_object_to_list()
@@ -59,6 +63,7 @@ class Developer:
         self.dal_instance.save_a_file(reason, new_word_dictionary)
 
     def nuke(self):
+
         current_user_database = self.dal_instance.load_a_file('user')
         current_word_database = self.dal_instance.load_a_file('word')
         for var in current_user_database.keys():
@@ -69,13 +74,31 @@ class Developer:
             self.dal_instance.save_a_file(reason, current_word_database)
 
     def add_language(self):
+
+        print('-'*50)
         old_word_dictionary = self.dal_instance.load_a_file('word')
         old_word_list = self.word_instance.word_dictionary_to_list(old_word_dictionary)
         print('what is the new language?'.center(50))
-
+        new_language = input().lower()
         for item in old_word_list:
+            new_translation = ''
+            allowed = False
             print(item)
+            print('what is the', new_language, 'translation?'.center(50))
+            while not allowed:
+                new_translation = input()
+                print('is this correct?'.center(50))
+                print(new_translation)
+                choice = input()
+                if choice.lower() == 'yes' or 'y':
+                    allowed = True
+                else:
+                    print('invalid input, please try again'.center(50))
+            item.append(new_translation)
+        self.word_instance.other_word_list_to_dictionary(old_word_dictionary, old_word_list)
 
-    def back_to_main_menu(self):
+    @staticmethod
+    def back_to_main_menu():
+
         input_menu_instance = menu_library.InputMenus()
         menu_library.InputMenus.login_or_register(input_menu_instance)

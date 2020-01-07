@@ -7,7 +7,7 @@ userDict = pickleInstance.load_a_file('user')
 class User:
     name = ''
     password = ''
-    trainingList = []
+    training_list = []
 
     @staticmethod
     def user_object_to_list(new_user):

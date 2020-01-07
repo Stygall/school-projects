@@ -19,16 +19,16 @@ class Word:
         return original_word_dictionary
 
     @staticmethod
+    def other_word_list_to_dictionary(word_list):
+        new_word_dictionary = {}
+        print(word_list)
+        for item in word_list:
+            new_word_dictionary[item[1]] = item
+        return new_word_dictionary
+
+    @staticmethod
     def word_dictionary_to_list(read_pickle):
         words = []
         for var in read_pickle.keys():
             words.append(read_pickle[var])
         return words
-
-    @staticmethod
-    def word_list_to_objects(words):
-        new_word = Word()
-        for item in words:
-            new_word.factor = item[0]
-            new_word.english = item[2]
-            new_word.dictionary_key = item[1]

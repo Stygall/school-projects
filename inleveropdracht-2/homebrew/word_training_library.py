@@ -44,7 +44,6 @@ class VocabularyTrainer:
         while session_flag:
             print('-' * 50)
             update_list = self.ask_question(current_training, start)
-            print(update_list)
             if not update_list[4]:
                 session_flag = False
             self.update_base_list_and_question_list(current_training, update_list)
@@ -53,17 +52,15 @@ class VocabularyTrainer:
         if not session_flag:
             reason = current_training.user + '_training'
             base_file = self.dal_instance.load_a_file(reason)
-            new_dictionary = self.word_instance.word_list_to_dictionary(base_file, self.question_list)
-            # print('this is the new dictionary')
-            # print(new_dictionary)
-            # print('this is the old dictionary')
-            # print(base_file)
-            # temporary_choice_moment = input()
-            # if not temporary_choice_moment:
-            #     self.dal_instance.save_a_file(reason, new_dictionary)
-            print('-' * 50)
-            print('unfortunately,'.center(50) + '\nwe can not save your progress at the moment'.center(50))
-            print('-' * 50)
+            new_dictionary = self.word_instance.other_word_list_to_dictionary(current_training.question_list)
+            print('this is the new dictionary')
+            print(new_dictionary)
+            print('this is the old dictionary')
+            print(base_file)
+            print('is this ok?')
+            temporary_choice_moment = input()
+            if not temporary_choice_moment:
+                self.dal_instance.save_a_file(reason, new_dictionary)
         return session_flag
 
     def make_base_list_and_question_list(self, current_training):

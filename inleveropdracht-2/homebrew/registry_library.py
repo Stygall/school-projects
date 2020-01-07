@@ -45,10 +45,10 @@ class Creator:
             print('2 = Dutch to english')
             choice = input()
             if choice == '1':
-                new_user.trainingList.append('en_nl')
+                new_user.training_list.append('en_nl')
                 new_user_flag = False
             elif choice == '2':
-                new_user.trainingList.append('nl_en')
+                new_user.training_list.append('nl_en')
                 new_user_flag = False
             else:
                 print('invalid input, try again'.center(50))
@@ -85,7 +85,6 @@ class Creator:
                         print('invalid input please try again'.center(50))
 
         def choose_question_language(library):
-
             part_three_flag = True
 
             print('-' * 50)
@@ -113,7 +112,6 @@ class Creator:
                             print('invalid input please try again'.center(50))
         choose_answer_language(library)
         choose_question_language(library)
-        print(new_training.question_language)
         return new_training
 
     def register_puzzle(self, library):

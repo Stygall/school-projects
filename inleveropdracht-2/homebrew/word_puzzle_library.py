@@ -12,8 +12,8 @@ class CrossWordPuzzle:
     complete_word_list = []
     previously_used_word_list = []
     user = ''
-    question_language = ''
-    answer_language = ''
+    question_language = 0
+    answer_language = 0
 
     def __init__(self):
 
@@ -80,7 +80,6 @@ class CrossWordPuzzle:
         current_puzzle.question_list = new_list
 
         return current_puzzle
-
 
     def ask_question(self, current_training, start):
 
