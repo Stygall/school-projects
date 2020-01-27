@@ -1,5 +1,6 @@
 import pickle
-user_dictionary_backup = {'Miel': ['Miel.noelanders@zuyd.nl', 'mielisawesome', {'score': 0, 'codes': []} ], 'Dev': ['Developer@qruiz.com', 'test123']}
+from custom_libraries import database_accessing_library
+user_database_backup = database_accessing_library.user_database_backup
 
 
 def load_a_file(reason):
@@ -11,7 +12,7 @@ def load_a_file(reason):
     except FileNotFoundError:
         with open(filename, 'wb') as file:
             if '_' in filename:
-                pickle.dump(user_dictionary_backup, file, pickle.HIGHEST_PROTOCOL)
+                pickle.dump(user_database_backup, file, pickle.HIGHEST_PROTOCOL)
                 file.close()
         with open(filename, 'rb') as file:
             read_pickle = pickle.load(file)
